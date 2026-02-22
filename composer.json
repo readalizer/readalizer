@@ -1,0 +1,25 @@
+{
+    "name": "millerphp/readalizer",
+    "description": "PHP readability validation via AST analysis",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Millerphp\\Readalizer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Christopher Miller"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "nikic/php-parser": "^5.0"
+    },
+    "bin": ["bin/readalizer"],
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "friendsofphp/php-cs-fixer": "^3.94",
+        "rector/rector": "^2.3"
+    }
+}

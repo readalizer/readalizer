@@ -1,0 +1,9 @@
+parameters:
+    level: 10
+    paths:
+        - src
+    stubFiles:
+        - phpstan-stubs/PhpParser.stub.php
+    universalObjectCratesClasses:
+        - PhpParser\Node
+    treatPhpDocTypesAsCertain: false

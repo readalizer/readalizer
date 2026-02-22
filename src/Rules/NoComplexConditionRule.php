@@ -1,0 +1,120 @@
+<?php
+
+/**
+ * @internal
+ */
+
+declare(strict_types=1);
+
+namespace Millerphp\Readalizer\Rules;
+
+use Millerphp\Readalizer\Analysis\RuleViolation;
+use Millerphp\Readalizer\Analysis\NodeTypeCollection;
+use Millerphp\Readalizer\Contracts\RuleContract;
+use PhpParser\Node;
+use PhpParser\Node\Expr\BinaryOp;
+use PhpParser\Node\Stmt\If_;
+use PhpParser\Node\Stmt\While_;
+use PhpParser\Node\Stmt\For_;
+use Millerphp\Readalizer\Analysis\RuleViolationCollection;
+
+final class NoComplexConditionRule implements RuleContract
+{
+    public function getNodeTypes(): NodeTypeCollection
+    {
+        return NodeTypeCollection::create([If_::class, While_::class, For_::class]);
+    }
+
+    public function processNode(Node $node, string $filePath): RuleViolationCollection
+    {
+        $cond = $this->getCondition($node);
+
+        if ($cond === null) {
+            return RuleViolationCollection::create([]);
+        }
+
+        if (!$this->hasMixedOperators($cond)) {
+            return RuleViolationCollection::create([]);
+        }
+
+        return RuleViolationCollection::create([RuleViolation::createFromDetails(
+            message:   'Complex condition detected. Avoid mixing && and || in one condition.',
+            filePath:  $filePath,
+            line:      $node->getStartLine(),
+            ruleClass: self::class,
+        )]);
+    }
+
+    private function getCondition(Node $node): ?Node
+    {
+        if ($node instanceof If_ || $node instanceof While_) {
+            return $node->cond;
+        }
+        if ($node instanceof For_) {
+            return $node->cond[0] ?? null;
+        }
+        return null;
+    }
+
+    private function hasMixedOperators(Node $node): bool
+    {
+        $hasAnd = false;
+        $hasOr = false;
+
+        $stack = [$node];
+        while ($stack) {
+            $current = array_pop($stack);
+            if ($current instanceof BinaryOp\BooleanAnd) {
+                $hasAnd = true;
+            }
+            if ($current instanceof BinaryOp\BooleanOr) {
+                $hasOr = true;
+            }
+            if ($hasAnd && $hasOr) {
+                return true;
+            }
+
+            $stack = $this->pushChildNodes($current, $stack);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array<int, Node> $stack
+     * @return array<int, Node>
+     */
+    // @readalizer-suppress NoArrayReturnRule
+    private function pushChildNodes(Node $node, array $stack): array
+    {
+        foreach ($node->getSubNodeNames() as $name) {
+            $child = $node->$name;
+            if ($child instanceof Node) {
+                $stack[] = $child;
+                continue;
+            }
+            if (is_array($child)) {
+                $stack = $this->pushArrayNodes($child, $stack);
+            }
+        }
+
+        return $stack;
+    }
+
+    /**
+     * @param array<mixed, mixed> $nodes
+     * @param array<int, Node> $stack
+     * @return array<int, Node>
+     */
+    // @readalizer-suppress NoArrayReturnRule
+    private function pushArrayNodes(array $nodes, array $stack): array
+    {
+        foreach ($nodes as $sub) {
+            if ($sub instanceof Node) {
+                $stack[] = $sub;
+            }
+        }
+
+        return $stack;
+    }
+}

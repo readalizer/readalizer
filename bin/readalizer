@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+// @readalizer-suppress NoExecutableCodeInFilesRule, NoMixedPhpHtmlRule, NoInlineDeclareRule, NoExitRule
+
+declare(strict_types=1);
+
+foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'] as $autoloader) {
+    if (file_exists($autoloader)) {
+        require $autoloader;
+        break;
+    }
+}
+
+use Millerphp\Readalizer\Application;
+use Millerphp\Readalizer\Console\Output;
+
+$output = Output::create();
+$app = Application::create($_SERVER['argv'], $output);
+
+exit($app->run());

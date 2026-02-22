@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * Creates a local readalizer.php config from the example template.
+ */
+
+declare(strict_types=1);
+
+namespace Millerphp\Readalizer\Command;
+
+use Millerphp\Readalizer\Console\Output;
+
+final class InitCommand
+{
+    private const TARGET = 'readalizer.php';
+    private const TEMPLATE = 'readalizer.php.example';
+    private const ERROR_EXISTS = 'readalizer.php already exists.';
+    private const ERROR_TEMPLATE_MISSING = 'readalizer.php.example not found.';
+    private const ERROR_WRITE_FAILED = 'Failed to write readalizer.php.';
+    private const SUCCESS = 'Created readalizer.php from readalizer.php.example.';
+
+    private function __construct(private readonly Output $output)
+    {
+    }
+
+    public static function create(Output $output): self
+    {
+        return new self($output);
+    }
+
+    public function run(): int
+    {
+        if (file_exists(self::TARGET)) {
+            $this->output->writeError(self::ERROR_EXISTS);
+            return 1;
+        }
+
+        if (!file_exists(self::TEMPLATE)) {
+            $this->output->writeError(self::ERROR_TEMPLATE_MISSING);
+            return 1;
+        }
+
+        $contents = file_get_contents(self::TEMPLATE);
+        if (!is_string($contents)) {
+            $this->output->writeError(self::ERROR_TEMPLATE_MISSING);
+            return 1;
+        }
+
+        $written = file_put_contents(self::TARGET, $contents);
+        if ($written === false) {
+            $this->output->writeError(self::ERROR_WRITE_FAILED);
+            return 1;
+        }
+
+        $this->output->writeln(self::SUCCESS);
+        return 0;
+    }
+}
