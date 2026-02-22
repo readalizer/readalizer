@@ -6,16 +6,16 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Command;
+namespace Readalizer\Readalizer\Command;
 
-use Millerphp\Readalizer\Analysis\AnalysisScope;
-use Millerphp\Readalizer\Analysis\ParallelRunConfig;
-use Millerphp\Readalizer\Analysis\PathCollection;
-use Millerphp\Readalizer\Analysis\RuleCollection;
-use Millerphp\Readalizer\Config\Configuration;
-use Millerphp\Readalizer\Config\ConfigurationLoader;
-use Millerphp\Readalizer\Console\Input;
-use Millerphp\Readalizer\Console\Output;
+use Readalizer\Readalizer\Analysis\AnalysisScope;
+use Readalizer\Readalizer\Analysis\ParallelRunConfig;
+use Readalizer\Readalizer\Analysis\PathCollection;
+use Readalizer\Readalizer\Analysis\RuleCollection;
+use Readalizer\Readalizer\Config\Configuration;
+use Readalizer\Readalizer\Config\ConfigurationLoader;
+use Readalizer\Readalizer\Console\Input;
+use Readalizer\Readalizer\Console\Output;
 
 final class AnalyseCommandContextFactory
 {

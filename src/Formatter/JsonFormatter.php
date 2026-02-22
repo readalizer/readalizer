@@ -6,10 +6,10 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Formatter;
+namespace Readalizer\Readalizer\Formatter;
 
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
-use Millerphp\Readalizer\Contracts\FormatterContract;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Contracts\FormatterContract;
 
 final class JsonFormatter implements FormatterContract
 {

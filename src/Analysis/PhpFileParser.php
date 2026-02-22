@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Analysis;
+namespace Readalizer\Readalizer\Analysis;
 
 use PhpParser\Node\Stmt;
 use PhpParser\ParserFactory;

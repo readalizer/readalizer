@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Command;
+namespace Readalizer\Readalizer\Command;
 
-use Millerphp\Readalizer\Analysis\PathCollection;
+use Readalizer\Readalizer\Analysis\PathCollection;
 
 final class WorkerPathSet
 {

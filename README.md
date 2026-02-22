@@ -7,7 +7,7 @@ Readalizer lets you define what readable code looks like and applies those rules
 ## Installation
 
 ```bash
-composer require millerphp/readalizer
+composer require readalizer/readalizer
 ```
 
 ## Quick Start

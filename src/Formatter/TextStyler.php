@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Formatter;
+namespace Readalizer\Readalizer\Formatter;
 
 final class TextStyler
 {

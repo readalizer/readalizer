@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Analysis;
+namespace Readalizer\Readalizer\Analysis;
 
 use PhpParser\Node;
 use PhpParser\Node\Identifier;
@@ -15,7 +15,7 @@ use PhpParser\Node\Expr;
 final class AttributeSuppressionChecker
 {
     private const SUPPRESS_SHORT = 'Suppress';
-    private const SUPPRESS_FQCN = 'Millerphp\\Readalizer\\Attributes\\Suppress';
+    private const SUPPRESS_FQCN = 'Readalizer\\Readalizer\\Attributes\\Suppress';
     private const CLASS_CONST_NAME = 'class';
 
     public function hasSuppressionAttribute(Node $node, string $ruleClass): bool

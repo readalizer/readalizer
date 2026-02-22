@@ -6,17 +6,17 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Command;
+namespace Readalizer\Readalizer\Command;
 
-use Millerphp\Readalizer\Analysis\Analyser;
-use Millerphp\Readalizer\Analysis\AnalyserFactory;
-use Millerphp\Readalizer\Analysis\RuleCollection;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
-use Millerphp\Readalizer\Analysis\ViolationPayloadCodec;
-use Millerphp\Readalizer\Config\Configuration;
-use Millerphp\Readalizer\Config\ConfigurationLoader;
-use Millerphp\Readalizer\Console\Input;
-use Millerphp\Readalizer\Console\Output;
+use Readalizer\Readalizer\Analysis\Analyser;
+use Readalizer\Readalizer\Analysis\AnalyserFactory;
+use Readalizer\Readalizer\Analysis\RuleCollection;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Analysis\ViolationPayloadCodec;
+use Readalizer\Readalizer\Config\Configuration;
+use Readalizer\Readalizer\Config\ConfigurationLoader;
+use Readalizer\Readalizer\Console\Input;
+use Readalizer\Readalizer\Console\Output;
 
 final class WorkerCommand
 {
@@ -94,14 +94,14 @@ final class WorkerCommand
         return WorkerPathSet::create($paths, $outputPath, $progressPath);
     }
 
-    private function loadPathsFromFile(string $path): \Millerphp\Readalizer\Analysis\PathCollection
+    private function loadPathsFromFile(string $path): \Readalizer\Readalizer\Analysis\PathCollection
     {
         $lines = @file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         if (!is_array($lines)) {
-            return \Millerphp\Readalizer\Analysis\PathCollection::create([]);
+            return \Readalizer\Readalizer\Analysis\PathCollection::create([]);
         }
 
-        return \Millerphp\Readalizer\Analysis\PathCollection::create($lines);
+        return \Readalizer\Readalizer\Analysis\PathCollection::create($lines);
     }
 
     private function buildAnalyser(Configuration $config): Analyser

@@ -9,13 +9,13 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer;
+namespace Readalizer\Readalizer;
 
-use Millerphp\Readalizer\Console\Input;
-use Millerphp\Readalizer\Console\Output;
-use Millerphp\Readalizer\Command\AnalyseCommand;
-use Millerphp\Readalizer\Command\InitCommand;
-use Millerphp\Readalizer\Command\WorkerCommand;
+use Readalizer\Readalizer\Console\Input;
+use Readalizer\Readalizer\Console\Output;
+use Readalizer\Readalizer\Command\AnalyseCommand;
+use Readalizer\Readalizer\Command\InitCommand;
+use Readalizer\Readalizer\Command\WorkerCommand;
 
 final class Application
 {

@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Console;
+namespace Readalizer\Readalizer\Console;
 
 final class Output
 {

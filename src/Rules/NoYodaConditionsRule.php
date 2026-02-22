@@ -6,18 +6,18 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rules;
+namespace Readalizer\Readalizer\Rules;
 
-use Millerphp\Readalizer\Analysis\RuleViolation;
-use Millerphp\Readalizer\Analysis\NodeTypeCollection;
-use Millerphp\Readalizer\Contracts\RuleContract;
+use Readalizer\Readalizer\Analysis\RuleViolation;
+use Readalizer\Readalizer\Analysis\NodeTypeCollection;
+use Readalizer\Readalizer\Contracts\RuleContract;
 use PhpParser\Node;
 use PhpParser\Node\Expr\BinaryOp;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Scalar;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
 
 final class NoYodaConditionsRule implements RuleContract
 {

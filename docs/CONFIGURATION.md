@@ -13,9 +13,9 @@ php bin/readalizer --init
 ```php
 <?php
 
-use Millerphp\Readalizer\Rules\NoLongMethodsRule;
-use Millerphp\Readalizer\Rulesets\DefaultRuleset;
-use Millerphp\Readalizer\Rules\LineLengthRule;
+use Readalizer\Readalizer\Rules\NoLongMethodsRule;
+use Readalizer\Readalizer\Rulesets\DefaultRuleset;
+use Readalizer\Readalizer\Rules\LineLengthRule;
 
 return [
     'paths' => ['src/', 'app/'],

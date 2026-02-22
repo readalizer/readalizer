@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Command;
+namespace Readalizer\Readalizer\Command;
 
 final class CommandDefault
 {

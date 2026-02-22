@@ -6,31 +6,31 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rulesets;
+namespace Readalizer\Readalizer\Rulesets;
 
-use Millerphp\Readalizer\Analysis\RuleCollection;
-use Millerphp\Readalizer\Contracts\RulesetContract;
-use Millerphp\Readalizer\Rules\BooleanMethodPrefixRule;
-use Millerphp\Readalizer\Rules\FunctionVerbNameRule;
-use Millerphp\Readalizer\Rules\GetterMustReturnValueRule;
-use Millerphp\Readalizer\Rules\MaxNestingDepthRule;
-use Millerphp\Readalizer\Rules\MaxMethodStatementsRule;
-use Millerphp\Readalizer\Rules\NoBooleanParameterRule;
-use Millerphp\Readalizer\Rules\NoConstructorWorkRule;
-use Millerphp\Readalizer\Rules\NoDefaultArrayParameterRule;
-use Millerphp\Readalizer\Rules\NoEmptyMethodRule;
-use Millerphp\Readalizer\Rules\NoLongParameterListRule;
-use Millerphp\Readalizer\Rules\NoHungarianNotationRule;
-use Millerphp\Readalizer\Rules\NoLongMethodsRule;
-use Millerphp\Readalizer\Rules\NoNestedLoopsRule;
-use Millerphp\Readalizer\Rules\NoNestedTryRule;
-use Millerphp\Readalizer\Rules\NoOptionalParameterAfterRequiredRule;
-use Millerphp\Readalizer\Rules\NoReferenceParameterRule;
-use Millerphp\Readalizer\Rules\NoReturnNullRule;
-use Millerphp\Readalizer\Rules\NoThrowGenericExceptionRule;
-use Millerphp\Readalizer\Rules\NoCatchGenericExceptionRule;
-use Millerphp\Readalizer\Rules\ParameterNameNotSingleLetterRule;
-use Millerphp\Readalizer\Rules\RequireNamedConstructorRule;
+use Readalizer\Readalizer\Analysis\RuleCollection;
+use Readalizer\Readalizer\Contracts\RulesetContract;
+use Readalizer\Readalizer\Rules\BooleanMethodPrefixRule;
+use Readalizer\Readalizer\Rules\FunctionVerbNameRule;
+use Readalizer\Readalizer\Rules\GetterMustReturnValueRule;
+use Readalizer\Readalizer\Rules\MaxNestingDepthRule;
+use Readalizer\Readalizer\Rules\MaxMethodStatementsRule;
+use Readalizer\Readalizer\Rules\NoBooleanParameterRule;
+use Readalizer\Readalizer\Rules\NoConstructorWorkRule;
+use Readalizer\Readalizer\Rules\NoDefaultArrayParameterRule;
+use Readalizer\Readalizer\Rules\NoEmptyMethodRule;
+use Readalizer\Readalizer\Rules\NoLongParameterListRule;
+use Readalizer\Readalizer\Rules\NoHungarianNotationRule;
+use Readalizer\Readalizer\Rules\NoLongMethodsRule;
+use Readalizer\Readalizer\Rules\NoNestedLoopsRule;
+use Readalizer\Readalizer\Rules\NoNestedTryRule;
+use Readalizer\Readalizer\Rules\NoOptionalParameterAfterRequiredRule;
+use Readalizer\Readalizer\Rules\NoReferenceParameterRule;
+use Readalizer\Readalizer\Rules\NoReturnNullRule;
+use Readalizer\Readalizer\Rules\NoThrowGenericExceptionRule;
+use Readalizer\Readalizer\Rules\NoCatchGenericExceptionRule;
+use Readalizer\Readalizer\Rules\ParameterNameNotSingleLetterRule;
+use Readalizer\Readalizer\Rules\RequireNamedConstructorRule;
 
 final class MethodDesignRuleset implements RulesetContract
 {

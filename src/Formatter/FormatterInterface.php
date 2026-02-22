@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Formatter;
+namespace Readalizer\Readalizer\Formatter;
 
-use Millerphp\Readalizer\Contracts\FormatterContract;
+use Readalizer\Readalizer\Contracts\FormatterContract;
 
 // @readalizer-suppress InterfaceNamingRule
 interface FormatterInterface extends FormatterContract {}

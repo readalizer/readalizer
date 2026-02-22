@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Config;
+namespace Readalizer\Readalizer\Config;
 
 final class CacheConfig
 {

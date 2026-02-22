@@ -6,19 +6,19 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rules;
+namespace Readalizer\Readalizer\Rules;
 
-use Millerphp\Readalizer\Analysis\RuleViolation;
-use Millerphp\Readalizer\Analysis\NodeTypeCollection;
-use Millerphp\Readalizer\Contracts\RuleContract;
-use Millerphp\Readalizer\Rules\Concerns\HasMagicMethods;
+use Readalizer\Readalizer\Analysis\RuleViolation;
+use Readalizer\Readalizer\Analysis\NodeTypeCollection;
+use Readalizer\Readalizer\Contracts\RuleContract;
+use Readalizer\Readalizer\Rules\Concerns\HasMagicMethods;
 use PhpParser\Node;
 use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Return_;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
 
 final class NoImplicitBoolReturnRule implements RuleContract
 {

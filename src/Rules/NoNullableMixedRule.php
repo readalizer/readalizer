@@ -6,11 +6,11 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rules;
+namespace Readalizer\Readalizer\Rules;
 
-use Millerphp\Readalizer\Analysis\RuleViolation;
-use Millerphp\Readalizer\Analysis\NodeTypeCollection;
-use Millerphp\Readalizer\Contracts\RuleContract;
+use Readalizer\Readalizer\Analysis\RuleViolation;
+use Readalizer\Readalizer\Analysis\NodeTypeCollection;
+use Readalizer\Readalizer\Contracts\RuleContract;
 use PhpParser\Node;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\NullableType;
@@ -18,7 +18,7 @@ use PhpParser\Node\UnionType;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Property;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
 
 final class NoNullableMixedRule implements RuleContract
 {

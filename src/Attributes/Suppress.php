@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Attributes;
+namespace Readalizer\Readalizer\Attributes;
 
-use Millerphp\Readalizer\Contracts\RuleContract;
+use Readalizer\Readalizer\Contracts\RuleContract;
 
 /**
  * Suppress one or more readability rules on the annotated declaration.

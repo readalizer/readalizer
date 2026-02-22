@@ -6,32 +6,32 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rulesets;
+namespace Readalizer\Readalizer\Rulesets;
 
-use Millerphp\Readalizer\Analysis\RuleCollection;
-use Millerphp\Readalizer\Contracts\RulesetContract;
-use Millerphp\Readalizer\Rules\FileLengthRule;
-use Millerphp\Readalizer\Rules\LineLengthRule;
-use Millerphp\Readalizer\Rules\NoBOMRule;
-use Millerphp\Readalizer\Rules\NoGlobalConstantsRule;
-use Millerphp\Readalizer\Rules\NoGlobalFunctionsRule;
-use Millerphp\Readalizer\Rules\NoInlineDeclareRule;
-use Millerphp\Readalizer\Rules\NoMixedPhpHtmlRule;
-use Millerphp\Readalizer\Rules\NoMixedLineEndingsRule;
-use Millerphp\Readalizer\Rules\NoMultipleClassesWithSameNameRule;
-use Millerphp\Readalizer\Rules\NoMultipleDeclareStrictTypesRule;
-use Millerphp\Readalizer\Rules\NoPhpCloseTagRule;
-use Millerphp\Readalizer\Rules\NoSuppressAllRule;
-use Millerphp\Readalizer\Rules\NoTodoWithoutTicketRule;
-use Millerphp\Readalizer\Rules\NoTrailingBlankLinesRule;
-use Millerphp\Readalizer\Rules\NoTrailingWhitespaceRule;
-use Millerphp\Readalizer\Rules\NoExecutableCodeInFilesRule;
-use Millerphp\Readalizer\Rules\RequireFileDocblockRule;
-use Millerphp\Readalizer\Rules\RequireNamespaceDeclarationFirstRule;
-use Millerphp\Readalizer\Rules\RequireNamespaceRule;
-use Millerphp\Readalizer\Rules\SingleNamespacePerFileRule;
-use Millerphp\Readalizer\Rules\SingleClassPerFileRule;
-use Millerphp\Readalizer\Rules\StrictTypesDeclarationRule;
+use Readalizer\Readalizer\Analysis\RuleCollection;
+use Readalizer\Readalizer\Contracts\RulesetContract;
+use Readalizer\Readalizer\Rules\FileLengthRule;
+use Readalizer\Readalizer\Rules\LineLengthRule;
+use Readalizer\Readalizer\Rules\NoBOMRule;
+use Readalizer\Readalizer\Rules\NoGlobalConstantsRule;
+use Readalizer\Readalizer\Rules\NoGlobalFunctionsRule;
+use Readalizer\Readalizer\Rules\NoInlineDeclareRule;
+use Readalizer\Readalizer\Rules\NoMixedPhpHtmlRule;
+use Readalizer\Readalizer\Rules\NoMixedLineEndingsRule;
+use Readalizer\Readalizer\Rules\NoMultipleClassesWithSameNameRule;
+use Readalizer\Readalizer\Rules\NoMultipleDeclareStrictTypesRule;
+use Readalizer\Readalizer\Rules\NoPhpCloseTagRule;
+use Readalizer\Readalizer\Rules\NoSuppressAllRule;
+use Readalizer\Readalizer\Rules\NoTodoWithoutTicketRule;
+use Readalizer\Readalizer\Rules\NoTrailingBlankLinesRule;
+use Readalizer\Readalizer\Rules\NoTrailingWhitespaceRule;
+use Readalizer\Readalizer\Rules\NoExecutableCodeInFilesRule;
+use Readalizer\Readalizer\Rules\RequireFileDocblockRule;
+use Readalizer\Readalizer\Rules\RequireNamespaceDeclarationFirstRule;
+use Readalizer\Readalizer\Rules\RequireNamespaceRule;
+use Readalizer\Readalizer\Rules\SingleNamespacePerFileRule;
+use Readalizer\Readalizer\Rules\SingleClassPerFileRule;
+use Readalizer\Readalizer\Rules\StrictTypesDeclarationRule;
 
 final class FileStructureRuleset implements RulesetContract
 {

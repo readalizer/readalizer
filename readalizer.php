@@ -4,12 +4,12 @@
 
 declare(strict_types=1);
 
-use Millerphp\Readalizer\Rulesets\ClassDesignRuleset;
-use Millerphp\Readalizer\Rulesets\ExpressionRuleset;
-use Millerphp\Readalizer\Rulesets\FileStructureRuleset;
-use Millerphp\Readalizer\Rulesets\MethodDesignRuleset;
-use Millerphp\Readalizer\Rulesets\NamingRuleset;
-use Millerphp\Readalizer\Rulesets\TypeSafetyRuleset;
+use Readalizer\Readalizer\Rulesets\ClassDesignRuleset;
+use Readalizer\Readalizer\Rulesets\ExpressionRuleset;
+use Readalizer\Readalizer\Rulesets\FileStructureRuleset;
+use Readalizer\Readalizer\Rulesets\MethodDesignRuleset;
+use Readalizer\Readalizer\Rulesets\NamingRuleset;
+use Readalizer\Readalizer\Rulesets\TypeSafetyRuleset;
 
 return [
     'paths' => ['.',],

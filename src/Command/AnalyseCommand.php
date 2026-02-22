@@ -6,16 +6,16 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Command;
+namespace Readalizer\Readalizer\Command;
 
-use Millerphp\Readalizer\Analysis\AnalyserFactory;
-use Millerphp\Readalizer\Analysis\AnalysisResult;
-use Millerphp\Readalizer\Analysis\ParallelRunRequest;
-use Millerphp\Readalizer\Analysis\ParallelRunner;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
-use Millerphp\Readalizer\Console\Input;
-use Millerphp\Readalizer\Console\Output;
-use Millerphp\Readalizer\Formatter\TextFormatter;
+use Readalizer\Readalizer\Analysis\AnalyserFactory;
+use Readalizer\Readalizer\Analysis\AnalysisResult;
+use Readalizer\Readalizer\Analysis\ParallelRunRequest;
+use Readalizer\Readalizer\Analysis\ParallelRunner;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Console\Input;
+use Readalizer\Readalizer\Console\Output;
+use Readalizer\Readalizer\Formatter\TextFormatter;
 
 final class AnalyseCommand
 {

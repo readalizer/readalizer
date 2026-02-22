@@ -6,10 +6,10 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rulesets;
+namespace Readalizer\Readalizer\Rulesets;
 
-use Millerphp\Readalizer\Analysis\RuleCollection;
-use Millerphp\Readalizer\Contracts\RulesetContract;
+use Readalizer\Readalizer\Analysis\RuleCollection;
+use Readalizer\Readalizer\Contracts\RulesetContract;
 
 final class DefaultRuleset implements RulesetContract
 {

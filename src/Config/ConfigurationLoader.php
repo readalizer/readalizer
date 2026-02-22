@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Config;
+namespace Readalizer\Readalizer\Config;
 
-use Millerphp\Readalizer\Console\Input;
-use Millerphp\Readalizer\Contracts\FileRuleContract;
-use Millerphp\Readalizer\Contracts\RuleContract;
-use Millerphp\Readalizer\Contracts\RulesetContract;
+use Readalizer\Readalizer\Console\Input;
+use Readalizer\Readalizer\Contracts\FileRuleContract;
+use Readalizer\Readalizer\Contracts\RuleContract;
+use Readalizer\Readalizer\Contracts\RulesetContract;
 
 final class ConfigurationLoader
 {

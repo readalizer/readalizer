@@ -6,17 +6,17 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rules;
+namespace Readalizer\Readalizer\Rules;
 
-use Millerphp\Readalizer\Analysis\RuleViolation;
-use Millerphp\Readalizer\Analysis\NodeTypeCollection;
-use Millerphp\Readalizer\Contracts\RuleContract;
+use Readalizer\Readalizer\Analysis\RuleViolation;
+use Readalizer\Readalizer\Analysis\NodeTypeCollection;
+use Readalizer\Readalizer\Contracts\RuleContract;
 use PhpParser\Node;
 use PhpParser\Node\Expr\BinaryOp;
 use PhpParser\Node\Stmt\If_;
 use PhpParser\Node\Stmt\While_;
 use PhpParser\Node\Stmt\For_;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
 
 /**
  * Deep boolean expressions are hard to parse.

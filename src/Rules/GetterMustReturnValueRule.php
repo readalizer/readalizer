@@ -6,16 +6,16 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rules;
+namespace Readalizer\Readalizer\Rules;
 
-use Millerphp\Readalizer\Analysis\RuleViolation;
-use Millerphp\Readalizer\Analysis\NodeTypeCollection;
-use Millerphp\Readalizer\Contracts\RuleContract;
-use Millerphp\Readalizer\Rules\Concerns\HasMagicMethods;
+use Readalizer\Readalizer\Analysis\RuleViolation;
+use Readalizer\Readalizer\Analysis\NodeTypeCollection;
+use Readalizer\Readalizer\Contracts\RuleContract;
+use Readalizer\Readalizer\Rules\Concerns\HasMagicMethods;
 use PhpParser\Node;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt\ClassMethod;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
 
 /**
  * Getter methods should return a value.

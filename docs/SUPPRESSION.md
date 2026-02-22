@@ -7,8 +7,8 @@ Readalizer supports both attribute-based and inline comment suppression.
 Use `#[Suppress]` on classes, methods, or properties.
 
 ```php
-use Millerphp\Readalizer\Attributes\Suppress;
-use Millerphp\Readalizer\Rules\NoLongMethodsRule;
+use Readalizer\Readalizer\Attributes\Suppress;
+use Readalizer\Readalizer\Rules\NoLongMethodsRule;
 
 #[Suppress(NoLongMethodsRule::class)]
 final class LegacyService

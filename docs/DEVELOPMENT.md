@@ -21,7 +21,7 @@ You can point Readalizer at any directory by passing it on the CLI.
 php bin/readalizer /path/to/project
 ```
 
-If you are working on Readalizer itself and want to test in another repo via Composer, use a local path repository in that project and require `millerphp/readalizer` from the local path.
+If you are working on Readalizer itself and want to test in another repo via Composer, use a local path repository in that project and require `readalizer/readalizer` from the local path.
 
 ## Repository Conventions
 
@@ -43,4 +43,3 @@ There is no automated test suite. Validate changes manually.
 - Classes are `final` by default.
 - 4-space indentation and K&R braces.
 - Interfaces use `Contract` suffix. Traits use `Has` prefix.
-

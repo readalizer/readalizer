@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 namespace App\Readalizer;
 
-use Millerphp\Readalizer\Analysis\NodeTypeCollection;
-use Millerphp\Readalizer\Analysis\RuleViolation;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
-use Millerphp\Readalizer\Contracts\RuleContract;
+use Readalizer\Readalizer\Analysis\NodeTypeCollection;
+use Readalizer\Readalizer\Analysis\RuleViolation;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Contracts\RuleContract;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
 
@@ -56,9 +56,9 @@ declare(strict_types=1);
 
 namespace App\Readalizer;
 
-use Millerphp\Readalizer\Analysis\RuleViolation;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
-use Millerphp\Readalizer\Contracts\FileRuleContract;
+use Readalizer\Readalizer\Analysis\RuleViolation;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Contracts\FileRuleContract;
 use PhpParser\Node;
 
 final class NoExecutableCodeInFilesRule implements FileRuleContract
@@ -77,7 +77,7 @@ final class NoExecutableCodeInFilesRule implements FileRuleContract
 Rulesets are simple bundles of rules.
 
 ```php
-use Millerphp\Readalizer\Contracts\RulesetContract;
+use Readalizer\Readalizer\Contracts\RulesetContract;
 
 final class MyRuleset implements RulesetContract
 {

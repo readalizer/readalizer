@@ -6,24 +6,24 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rulesets;
+namespace Readalizer\Readalizer\Rulesets;
 
-use Millerphp\Readalizer\Analysis\RuleCollection;
-use Millerphp\Readalizer\Contracts\RulesetContract;
-use Millerphp\Readalizer\Rules\NoBreakInFinallyRule;
-use Millerphp\Readalizer\Rules\NoDeepBooleanExpressionRule;
-use Millerphp\Readalizer\Rules\NoEchoRule;
-use Millerphp\Readalizer\Rules\NoElseAfterReturnRule;
-use Millerphp\Readalizer\Rules\NoEmptyCatchRule;
-use Millerphp\Readalizer\Rules\NoExitRule;
-use Millerphp\Readalizer\Rules\NoAssignmentInConditionRule;
-use Millerphp\Readalizer\Rules\NoChainMethodCallsRule;
-use Millerphp\Readalizer\Rules\NoComplexConditionRule;
-use Millerphp\Readalizer\Rules\NoImplicitTernaryRule;
-use Millerphp\Readalizer\Rules\NoMagicStringRule;
-use Millerphp\Readalizer\Rules\NoNestedTernaryRule;
-use Millerphp\Readalizer\Rules\NoSwitchFallthroughRule;
-use Millerphp\Readalizer\Rules\NoYodaConditionsRule;
+use Readalizer\Readalizer\Analysis\RuleCollection;
+use Readalizer\Readalizer\Contracts\RulesetContract;
+use Readalizer\Readalizer\Rules\NoBreakInFinallyRule;
+use Readalizer\Readalizer\Rules\NoDeepBooleanExpressionRule;
+use Readalizer\Readalizer\Rules\NoEchoRule;
+use Readalizer\Readalizer\Rules\NoElseAfterReturnRule;
+use Readalizer\Readalizer\Rules\NoEmptyCatchRule;
+use Readalizer\Readalizer\Rules\NoExitRule;
+use Readalizer\Readalizer\Rules\NoAssignmentInConditionRule;
+use Readalizer\Readalizer\Rules\NoChainMethodCallsRule;
+use Readalizer\Readalizer\Rules\NoComplexConditionRule;
+use Readalizer\Readalizer\Rules\NoImplicitTernaryRule;
+use Readalizer\Readalizer\Rules\NoMagicStringRule;
+use Readalizer\Readalizer\Rules\NoNestedTernaryRule;
+use Readalizer\Readalizer\Rules\NoSwitchFallthroughRule;
+use Readalizer\Readalizer\Rules\NoYodaConditionsRule;
 
 final class ExpressionRuleset implements RulesetContract
 {

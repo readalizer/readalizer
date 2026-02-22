@@ -455,6 +455,6 @@ class Int_ extends \PhpParser\Node\Scalar
     public $value;
 }
 
-namespace Millerphp\Readalizer\Analysis;
+namespace Readalizer\Readalizer\Analysis;
 
 class Node extends \PhpParser\Node {}

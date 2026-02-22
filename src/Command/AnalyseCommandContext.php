@@ -6,11 +6,11 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Command;
+namespace Readalizer\Readalizer\Command;
 
-use Millerphp\Readalizer\Analysis\AnalysisScope;
-use Millerphp\Readalizer\Analysis\ParallelRunConfig;
-use Millerphp\Readalizer\Analysis\RuleCollection;
+use Readalizer\Readalizer\Analysis\AnalysisScope;
+use Readalizer\Readalizer\Analysis\ParallelRunConfig;
+use Readalizer\Readalizer\Analysis\RuleCollection;
 
 final class AnalyseCommandContext
 {

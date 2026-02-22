@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Analysis;
+namespace Readalizer\Readalizer\Analysis;
 
 final class AnalysisScope
 {

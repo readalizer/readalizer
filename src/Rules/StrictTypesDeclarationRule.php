@@ -6,15 +6,15 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rules;
+namespace Readalizer\Readalizer\Rules;
 
-use Millerphp\Readalizer\Analysis\RuleViolation;
-use Millerphp\Readalizer\Contracts\FileRuleContract;
+use Readalizer\Readalizer\Analysis\RuleViolation;
+use Readalizer\Readalizer\Contracts\FileRuleContract;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Scalar\Int_;
 use PhpParser\Node\Stmt\Declare_;
 use PhpParser\Node\Stmt\InlineHTML;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
 
 /**
  * Every PHP file must open with declare(strict_types=1).

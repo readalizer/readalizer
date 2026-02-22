@@ -6,12 +6,12 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Formatter;
+namespace Readalizer\Readalizer\Formatter;
 
-use Millerphp\Readalizer\Analysis\RuleViolation;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
-use Millerphp\Readalizer\Console\Output;
-use Millerphp\Readalizer\Contracts\FormatterContract;
+use Readalizer\Readalizer\Analysis\RuleViolation;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Console\Output;
+use Readalizer\Readalizer\Contracts\FormatterContract;
 
 final class TextFormatter implements FormatterContract
 {

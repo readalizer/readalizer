@@ -1,10 +1,10 @@
 {
-    "name": "millerphp/readalizer",
+    "name": "readalizer/readalizer",
     "description": "PHP readability validation via AST analysis",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Millerphp\\Readalizer\\": "src/"
+            "Readalizer\\Readalizer\\": "src/"
         }
     },
     "authors": [

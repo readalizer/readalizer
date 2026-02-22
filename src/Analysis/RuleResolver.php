@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Analysis;
+namespace Readalizer\Readalizer\Analysis;
 
-use Millerphp\Readalizer\Contracts\RuleContract;
+use Readalizer\Readalizer\Contracts\RuleContract;
 use PhpParser\Node;
 
 final class RuleResolver

@@ -12,8 +12,8 @@ foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php
     }
 }
 
-use Millerphp\Readalizer\Application;
-use Millerphp\Readalizer\Console\Output;
+use Readalizer\Readalizer\Application;
+use Readalizer\Readalizer\Console\Output;
 
 $output = Output::create();
 $app = Application::create($_SERVER['argv'], $output);

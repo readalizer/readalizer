@@ -6,30 +6,30 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rulesets;
+namespace Readalizer\Readalizer\Rulesets;
 
-use Millerphp\Readalizer\Analysis\RuleCollection;
-use Millerphp\Readalizer\Contracts\RulesetContract;
-use Millerphp\Readalizer\Rules\ClassNamePascalCaseRule;
-use Millerphp\Readalizer\Rules\ConstantUppercaseRule;
-use Millerphp\Readalizer\Rules\ExceptionSuffixRule;
-use Millerphp\Readalizer\Rules\FinalClassRule;
-use Millerphp\Readalizer\Rules\MaxClassLengthRule;
-use Millerphp\Readalizer\Rules\NoEmptyClassRule;
-use Millerphp\Readalizer\Rules\NoEmptyTraitRule;
-use Millerphp\Readalizer\Rules\NoGodClassRule;
-use Millerphp\Readalizer\Rules\NoInheritanceRule;
-use Millerphp\Readalizer\Rules\NoInterfacesOnFinalClassRule;
-use Millerphp\Readalizer\Rules\NoMutablePublicPropertiesRule;
-use Millerphp\Readalizer\Rules\PreferPropertyPromotionRule;
-use Millerphp\Readalizer\Rules\NoProtectedPropertiesRule;
-use Millerphp\Readalizer\Rules\NoPublicPropertiesRule;
-use Millerphp\Readalizer\Rules\NoPublicConstructorRule;
-use Millerphp\Readalizer\Rules\NoStaticPropertyRule;
-use Millerphp\Readalizer\Rules\NoStaticMethodsRule;
-use Millerphp\Readalizer\Rules\PropertyNameCamelCaseRule;
-use Millerphp\Readalizer\Rules\RequireImmutableValueObjectRule;
-use Millerphp\Readalizer\Rules\SingleResponsibilityClassRule;
+use Readalizer\Readalizer\Analysis\RuleCollection;
+use Readalizer\Readalizer\Contracts\RulesetContract;
+use Readalizer\Readalizer\Rules\ClassNamePascalCaseRule;
+use Readalizer\Readalizer\Rules\ConstantUppercaseRule;
+use Readalizer\Readalizer\Rules\ExceptionSuffixRule;
+use Readalizer\Readalizer\Rules\FinalClassRule;
+use Readalizer\Readalizer\Rules\MaxClassLengthRule;
+use Readalizer\Readalizer\Rules\NoEmptyClassRule;
+use Readalizer\Readalizer\Rules\NoEmptyTraitRule;
+use Readalizer\Readalizer\Rules\NoGodClassRule;
+use Readalizer\Readalizer\Rules\NoInheritanceRule;
+use Readalizer\Readalizer\Rules\NoInterfacesOnFinalClassRule;
+use Readalizer\Readalizer\Rules\NoMutablePublicPropertiesRule;
+use Readalizer\Readalizer\Rules\PreferPropertyPromotionRule;
+use Readalizer\Readalizer\Rules\NoProtectedPropertiesRule;
+use Readalizer\Readalizer\Rules\NoPublicPropertiesRule;
+use Readalizer\Readalizer\Rules\NoPublicConstructorRule;
+use Readalizer\Readalizer\Rules\NoStaticPropertyRule;
+use Readalizer\Readalizer\Rules\NoStaticMethodsRule;
+use Readalizer\Readalizer\Rules\PropertyNameCamelCaseRule;
+use Readalizer\Readalizer\Rules\RequireImmutableValueObjectRule;
+use Readalizer\Readalizer\Rules\SingleResponsibilityClassRule;
 
 final class ClassDesignRuleset implements RulesetContract
 {

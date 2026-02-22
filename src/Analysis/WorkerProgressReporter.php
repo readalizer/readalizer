@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Analysis;
+namespace Readalizer\Readalizer\Analysis;
 
-use Millerphp\Readalizer\Console\ProgressBar;
+use Readalizer\Readalizer\Console\ProgressBar;
 
 final class WorkerProgressReporter
 {

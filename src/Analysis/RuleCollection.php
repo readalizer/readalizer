@@ -6,12 +6,12 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Analysis;
+namespace Readalizer\Readalizer\Analysis;
 
 use IteratorAggregate;
 use ArrayIterator;
-use Millerphp\Readalizer\Contracts\FileRuleContract;
-use Millerphp\Readalizer\Contracts\RuleContract;
+use Readalizer\Readalizer\Contracts\FileRuleContract;
+use Readalizer\Readalizer\Contracts\RuleContract;
 
 /**
  * A collection of RuleContract and FileRuleContract instances.

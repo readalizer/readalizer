@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use Millerphp\Readalizer\Rulesets\ClassDesignRuleset;
-use Millerphp\Readalizer\Rulesets\ExpressionRuleset;
-use Millerphp\Readalizer\Rulesets\FileStructureRuleset;
-use Millerphp\Readalizer\Rulesets\MethodDesignRuleset;
-use Millerphp\Readalizer\Rulesets\NamingRuleset;
-use Millerphp\Readalizer\Rulesets\TypeSafetyRuleset;
+use Readalizer\Readalizer\Rulesets\ClassDesignRuleset;
+use Readalizer\Readalizer\Rulesets\ExpressionRuleset;
+use Readalizer\Readalizer\Rulesets\FileStructureRuleset;
+use Readalizer\Readalizer\Rulesets\MethodDesignRuleset;
+use Readalizer\Readalizer\Rulesets\NamingRuleset;
+use Readalizer\Readalizer\Rulesets\TypeSafetyRuleset;
 
 /**
  * Copy this to readalizer.php in your project root and configure your rules.
@@ -19,7 +19,7 @@ use Millerphp\Readalizer\Rulesets\TypeSafetyRuleset;
  *
  * PHP attribute on a class, method, property, or parameter:
  *
- *   use Millerphp\Readalizer\Attributes\Suppress;
+ *   use Readalizer\Readalizer\Attributes\Suppress;
  *
  *   #[Suppress]                                   // suppress ALL rules
  *   #[Suppress(NoLongMethodsRule::class)]          // suppress one rule

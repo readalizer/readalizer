@@ -6,11 +6,11 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Command;
+namespace Readalizer\Readalizer\Command;
 
-use Millerphp\Readalizer\Analysis\PathCollection;
-use Millerphp\Readalizer\Console\Input;
-use Millerphp\Readalizer\Console\ProgressBar;
+use Readalizer\Readalizer\Analysis\PathCollection;
+use Readalizer\Readalizer\Console\Input;
+use Readalizer\Readalizer\Console\ProgressBar;
 
 final class ProgressBarFactory
 {

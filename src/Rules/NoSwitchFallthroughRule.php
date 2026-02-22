@@ -6,11 +6,11 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rules;
+namespace Readalizer\Readalizer\Rules;
 
-use Millerphp\Readalizer\Analysis\RuleViolation;
-use Millerphp\Readalizer\Analysis\NodeTypeCollection;
-use Millerphp\Readalizer\Contracts\RuleContract;
+use Readalizer\Readalizer\Analysis\RuleViolation;
+use Readalizer\Readalizer\Analysis\NodeTypeCollection;
+use Readalizer\Readalizer\Contracts\RuleContract;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Switch_;
 use PhpParser\Node\Stmt\Case_;
@@ -19,7 +19,7 @@ use PhpParser\Node\Stmt\Return_;
 use PhpParser\Node\Expr\Throw_;
 use PhpParser\Node\Stmt\Expression;
 use PhpParser\Node\Stmt\Continue_;
-use Millerphp\Readalizer\Analysis\RuleViolationCollection;
+use Readalizer\Readalizer\Analysis\RuleViolationCollection;
 
 /**
  * Switch cases should end with a break/return/throw/continue.

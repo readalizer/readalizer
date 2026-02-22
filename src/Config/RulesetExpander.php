@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Config;
+namespace Readalizer\Readalizer\Config;
 
-use Millerphp\Readalizer\Analysis\RuleCollection;
-use Millerphp\Readalizer\Contracts\RulesetContract;
+use Readalizer\Readalizer\Analysis\RuleCollection;
+use Readalizer\Readalizer\Contracts\RulesetContract;
 
 final class RulesetExpander
 {

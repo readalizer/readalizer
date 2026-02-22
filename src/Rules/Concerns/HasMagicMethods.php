@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Rules\Concerns;
+namespace Readalizer\Readalizer\Rules\Concerns;
 
 use PhpParser\Node\Stmt\ClassMethod;
 

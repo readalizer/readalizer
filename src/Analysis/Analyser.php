@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Millerphp\Readalizer\Analysis;
+namespace Readalizer\Readalizer\Analysis;
 
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
@@ -46,7 +46,7 @@ final class Analyser
      */
     public function analyse(
         PathCollection $paths,
-        ?\Millerphp\Readalizer\Console\ProgressBar $progress = null
+        ?\Readalizer\Readalizer\Console\ProgressBar $progress = null
     ): AnalysisResult {
         $violations = RuleViolationCollection::create([]);
 
