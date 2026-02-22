@@ -34,3 +34,7 @@ php bin/readalizer --config=path/to/readalizer.php
 ## Developer Docs
 
 See `docs/README.md` for full developer documentation, including architecture, rules, suppression, configuration, CLI details, and parallel execution.
+
+## Release
+
+Current release: 1.0.0 (2026-02-22)

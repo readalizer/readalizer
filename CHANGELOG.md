@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-02-22
+
 ### Added
 - Developer documentation set under `docs/`.
 - Parallel execution helpers and worker infrastructure improvements.
@@ -17,4 +19,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - PHPStan typing gaps across analysis, worker, and formatter layers.
-
