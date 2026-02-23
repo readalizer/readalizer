@@ -35,12 +35,13 @@ final class InitCommand
             return 1;
         }
 
-        if (!file_exists(self::TEMPLATE)) {
+        $templatePath = $this->resolveTemplatePath();
+        if ($templatePath === null) {
             $this->output->writeError(self::ERROR_TEMPLATE_MISSING);
             return 1;
         }
 
-        $contents = file_get_contents(self::TEMPLATE);
+        $contents = file_get_contents($templatePath);
         if (!is_string($contents)) {
             $this->output->writeError(self::ERROR_TEMPLATE_MISSING);
             return 1;
@@ -54,5 +55,20 @@ final class InitCommand
 
         $this->output->writeln(self::SUCCESS);
         return 0;
+    }
+
+    private function resolveTemplatePath(): ?string
+    {
+        if (file_exists(self::TEMPLATE)) {
+            return self::TEMPLATE;
+        }
+
+        $packageRoot = dirname(__DIR__, 3);
+        $path = $packageRoot . DIRECTORY_SEPARATOR . self::TEMPLATE;
+        if (file_exists($path)) {
+            return $path;
+        }
+
+        return null;
     }
 }
