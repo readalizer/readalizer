@@ -14,6 +14,7 @@ final class InitCommand
 {
     private const TARGET = 'readalizer.php';
     private const TEMPLATE = 'readalizer.php.example';
+    private const VENDOR_TEMPLATE = 'vendor/readalizer/readalizer/readalizer.php.example';
     private const ERROR_EXISTS = 'readalizer.php already exists.';
     private const ERROR_TEMPLATE_MISSING = 'readalizer.php.example not found.';
     private const ERROR_WRITE_FAILED = 'Failed to write readalizer.php.';
@@ -59,14 +60,25 @@ final class InitCommand
 
     private function resolveTemplatePath(): ?string
     {
-        if (file_exists(self::TEMPLATE)) {
-            return self::TEMPLATE;
+        $currentDirectory = getcwd();
+        if (!is_string($currentDirectory) || $currentDirectory === '') {
+            return null;
         }
 
-        $packageRoot = dirname(__DIR__, 3);
-        $path = $packageRoot . DIRECTORY_SEPARATOR . self::TEMPLATE;
-        if (file_exists($path)) {
-            return $path;
+        $directory = $currentDirectory;
+
+        while (true) {
+            $path = $directory . DIRECTORY_SEPARATOR . self::VENDOR_TEMPLATE;
+            if (file_exists($path)) {
+                return $path;
+            }
+
+            $parentDirectory = dirname($directory);
+            if ($parentDirectory === $directory) {
+                break;
+            }
+
+            $directory = $parentDirectory;
         }
 
         return null;
