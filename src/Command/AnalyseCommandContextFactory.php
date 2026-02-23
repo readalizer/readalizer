@@ -8,22 +8,35 @@ declare(strict_types=1);
 
 namespace Readalizer\Readalizer\Command;
 
+use Readalizer\Readalizer\Attributes\Suppress;
 use Readalizer\Readalizer\Analysis\AnalysisScope;
 use Readalizer\Readalizer\Analysis\ParallelRunConfig;
 use Readalizer\Readalizer\Analysis\PathCollection;
 use Readalizer\Readalizer\Analysis\RuleCollection;
+use Readalizer\Readalizer\Config\CacheConfig;
 use Readalizer\Readalizer\Config\Configuration;
 use Readalizer\Readalizer\Config\ConfigurationLoader;
 use Readalizer\Readalizer\Console\Input;
 use Readalizer\Readalizer\Console\Output;
 
+#[Suppress(
+    \Readalizer\Readalizer\Rules\MaxClassLengthRule::class,
+    \Readalizer\Readalizer\Rules\NoGodClassRule::class,
+)]
 final class AnalyseCommandContextFactory
 {
     private const OPTION_JOBS = '--jobs';
     private const OPTION_WORKER_TIMEOUT = '--worker-timeout';
     private const OPTION_MEMORY = '--memory-limit';
     private const OPTION_CONFIG = '--config';
+    private const OPTION_FORMAT = '--format';
+    private const OPTION_OUTPUT = '--output';
+    private const OPTION_GENERATE_BASELINE = '--generate-baseline';
+    private const OPTION_CACHE = '--cache';
+    private const OPTION_NO_CACHE = '--no-cache';
     private const EMPTY_STRING = '';
+    private const DEFAULT_OUTPUT_FORMAT = 'text';
+    private const FORMAT_JSON = 'json';
     private const ERROR_NO_PATHS = "Error: no paths specified. Pass paths as arguments or set 'paths' in your config.";
 
     private function __construct(
@@ -37,6 +50,7 @@ final class AnalyseCommandContextFactory
         return new self($input, $output);
     }
 
+    #[Suppress(\Readalizer\Readalizer\Rules\NoLongMethodsRule::class)]
     public function createContext(): ?AnalyseCommandContext
     {
         $config = $this->loadConfiguration();
@@ -48,7 +62,17 @@ final class AnalyseCommandContextFactory
         $rules = RuleCollection::create($config->rules);
         $targets = AnalysisScope::create($paths, $config->ignore);
         $progress = ProgressBarFactory::create($this->input)->build($paths);
-        $options = ParallelRunConfig::create($this->resolveJobs(), $progress);
+        $options = ParallelRunConfig::create(
+            $this->resolveJobs(),
+            $progress,
+            $this->resolveOutputFormat(),
+            $this->resolveOutputPath(),
+            $config->baseline,
+            $this->resolveGenerateBaselinePath(),
+            $this->resolveMaxViolations($config),
+            $this->resolveCacheConfig($config),
+            $this->resolveCacheCliOverride()
+        );
         $environment = ParallelRunEnvironment::create(
             $this->resolveMemoryLimit($config),
             $this->resolveConfigPath(),
@@ -57,6 +81,64 @@ final class AnalyseCommandContextFactory
         );
 
         return AnalyseCommandContext::create($rules, $targets, $options, $environment);
+    }
+
+    private function resolveOutputFormat(): string
+    {
+        $format = $this->input->getOption(self::OPTION_FORMAT);
+        if ($format === self::FORMAT_JSON) {
+            return self::FORMAT_JSON;
+        }
+
+        return self::DEFAULT_OUTPUT_FORMAT;
+    }
+
+    private function resolveGenerateBaselinePath(): ?string
+    {
+        $path = $this->input->getOption(self::OPTION_GENERATE_BASELINE);
+        return is_string($path) && $path !== self::EMPTY_STRING ? $path : null;
+    }
+
+    private function resolveOutputPath(): ?string
+    {
+        $path = $this->input->getOption(self::OPTION_OUTPUT);
+        return is_string($path) && $path !== self::EMPTY_STRING ? $path : null;
+    }
+
+    private function resolveMaxViolations(Configuration $config): int
+    {
+        if (is_int($config->maxViolations) && $config->maxViolations >= 0) {
+            return $config->maxViolations;
+        }
+
+        return 5000;
+    }
+
+    private function resolveCacheConfig(Configuration $config): ?CacheConfig
+    {
+        $override = $this->resolveCacheCliOverride();
+        if ($override === null) {
+            return $config->cache;
+        }
+
+        $path = $config->cache?->getPath() ?? '.readalizer-cache.json';
+        return CacheConfig::createFromArray([
+            'enabled' => $override,
+            'path' => $path,
+        ]);
+    }
+
+    private function resolveCacheCliOverride(): ?bool
+    {
+        if ($this->input->hasOption(self::OPTION_NO_CACHE)) {
+            return false;
+        }
+
+        if ($this->input->hasOption(self::OPTION_CACHE)) {
+            return true;
+        }
+
+        return null;
     }
 
     private function loadConfiguration(): Configuration

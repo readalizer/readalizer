@@ -13,7 +13,6 @@ use Readalizer\Readalizer\Console\Output;
 final class InitCommand
 {
     private const TARGET = 'readalizer.php';
-    private const TEMPLATE = 'readalizer.php.example';
     private const VENDOR_TEMPLATE = 'vendor/readalizer/readalizer/readalizer.php.example';
     private const ERROR_EXISTS = 'readalizer.php already exists.';
     private const ERROR_TEMPLATE_MISSING = 'readalizer.php.example not found.';
@@ -61,7 +60,7 @@ final class InitCommand
     private function resolveTemplatePath(): ?string
     {
         $currentDirectory = getcwd();
-        if (!is_string($currentDirectory) || $currentDirectory === '') {
+        if (!is_string($currentDirectory)) {
             return null;
         }
 

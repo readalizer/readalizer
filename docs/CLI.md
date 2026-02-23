@@ -29,22 +29,24 @@ These options are currently wired into runtime behavior.
   Kills worker processes after N seconds.
 - `--memory-limit=<v>`
   Sets the PHP memory limit for analysis.
+- `--format=text|json`
+  Selects text or JSON output formatting.
+- `--output=<file>`
+  Writes the formatted report to a file (timing still prints to stderr).
+- `--baseline=<file>`
+  Suppresses violations found in the baseline JSON file.
+- `--generate-baseline=<file>`
+  Writes current violations to a baseline JSON file.
+- `--max-violations=<n>`
+  Stops collecting after `n` violations and caps the report (`0` means unlimited).
+- `--cache` / `--no-cache`
+  Enables or disables the on-disk per-file result cache.
 - `--progress` / `--no-progress`
   Forces the progress bar on or off.
 - `--debug`
   Enables per-rule debug logging. This is currently applied in worker mode.
 - `--init`
   Creates `readalizer.php` from `readalizer.php.example` in the current directory.
-
-## Options Listed in `--help`
-
-The CLI help lists additional options such as `--format`, `--cache`, `--baseline`, and `--max-violations`. These are parsed in configuration but not yet enforced by the runtime. They are reserved for future work.
-
-If you plan to implement them, start in:
-
-- `src/Command/AnalyseCommand.php`
-- `src/Config/ConfigurationLoader.php`
-- `src/Analysis/Analyser.php`
 
 ## Exit Codes
 

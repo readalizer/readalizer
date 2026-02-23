@@ -17,9 +17,9 @@
 - Increase `--memory-limit`.
 - Exclude large vendor or generated directories via `ignore`.
 
-## JSON output missing
+## JSON output includes extra lines
 
-The CLI help lists `--format=json` but the `AnalyseCommand` currently uses `TextFormatter` only. Implement `JsonFormatter` wiring in `AnalyseCommand` if you need JSON output.
+Run timing is written to `STDERR` when using `--format=json` so `STDOUT` remains valid JSON.
 
 ## See Also
 

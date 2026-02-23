@@ -8,12 +8,19 @@ declare(strict_types=1);
 
 namespace Readalizer\Readalizer\Analysis;
 
+use Readalizer\Readalizer\Attributes\Suppress;
 use Readalizer\Readalizer\System\MemoryLimitConverter;
 use Readalizer\Readalizer\System\ProcessorProfile;
 
+#[Suppress(
+    \Readalizer\Readalizer\Rules\MaxClassLengthRule::class,
+    \Readalizer\Readalizer\Rules\NoGodClassRule::class,
+)]
 final class ParallelRunner
 {
     private const TOKEN_PREFIX = 'readalizer-token';
+    private const EMPTY_STRING = '';
+    private const BASELINE_ITEMS_KEY = 'violations';
 
     private function __construct(
         private readonly string $memoryLimit,
@@ -78,15 +85,17 @@ final class ParallelRunner
         return AnalysisResult::create($violations);
     }
 
+    #[Suppress(\Readalizer\Readalizer\Rules\NoLongParameterListRule::class)]
     private function createWorkerProcesses(
         FileChunkCollection $chunks,
         int $jobs,
         string $token,
-        string $tokenFile
+        string $tokenFile,
+        ParallelRunConfig $options
     ): WorkerProcessCollection {
         $collection = WorkerProcessCollection::create([]);
         foreach ($chunks as $chunk) {
-            $collection->addProcess($this->processFactory->createProcess($chunk, $jobs, $token, $tokenFile));
+            $collection->addProcess($this->processFactory->createProcess($chunk, $jobs, $token, $tokenFile, $options));
         }
 
         return $collection;
@@ -132,8 +141,13 @@ final class ParallelRunner
         ParallelRunConfig $options,
         array $ignorePaths
     ): AnalysisResult {
-        $analyser = AnalyserFactory::create($rules, $ignorePaths);
-        return $analyser->analyse($files, $options->getProgress());
+        $analyser = AnalyserFactory::create($rules, $ignorePaths, $options->getCacheConfig());
+        return $analyser->analyse(
+            $files,
+            $options->getProgress(),
+            $options->getMaxViolations(),
+            $this->buildBaselineFilter($options->getBaselinePath())
+        );
     }
 
     private function runParallel(PathCollection $files, ParallelRunConfig $options, int $jobs): RuleViolationCollection
@@ -144,12 +158,124 @@ final class ParallelRunner
         $tokenFile = $this->createTokenFile();
         $token = $this->readToken($tokenFile);
 
-        $processes = $this->createWorkerProcesses($chunks, $jobs, $token, $tokenFile);
-        $violations = $this->processSupervisor->collectViolations($processes, $options->getProgress());
+        $processes = $this->createWorkerProcesses($chunks, $jobs, $token, $tokenFile, $options);
+        $violations = $this->processSupervisor->collectViolations(
+            $processes,
+            $options->getProgress(),
+            $options->getMaxViolations()
+        );
 
         @unlink($tokenFile);
 
         return $violations;
+    }
+
+    private function buildBaselineFilter(?string $baselinePath): ?\Closure
+    {
+        $keys = $this->loadBaselineKeysBestEffort($baselinePath);
+        if ($keys === []) {
+            return null;
+        }
+
+        return static function (RuleViolationCollection $violations) use ($keys): RuleViolationCollection {
+            $filtered = [];
+            foreach ($violations as $violation) {
+                $key = sha1(
+                    $violation->getFilePath()
+                    . "\0"
+                    . $violation->getLine()
+                    . "\0"
+                    . $violation->getMessage()
+                    . "\0"
+                    . $violation->getRuleClass()
+                );
+                if (isset($keys[$key])) {
+                    continue;
+                }
+
+                $filtered[] = $violation;
+            }
+
+            return RuleViolationCollection::create($filtered);
+        };
+    }
+
+    /**
+     * @return array<string, true>
+     */
+    // @readalizer-suppress NoArrayReturnRule
+    #[Suppress(\Readalizer\Readalizer\Rules\NoLongMethodsRule::class)]
+    private function loadBaselineKeysBestEffort(?string $baselinePath): array
+    {
+        if (!is_string($baselinePath) || $baselinePath === self::EMPTY_STRING) {
+            return [];
+        }
+
+        $contents = @file_get_contents($baselinePath);
+        if (!is_string($contents)) {
+            return [];
+        }
+
+        /** @var array<string, mixed>|null $decoded */
+        $decoded = json_decode($contents, true);
+        $items = $decoded[self::BASELINE_ITEMS_KEY] ?? null;
+        if (!is_array($decoded) || !is_array($items)) {
+            return [];
+        }
+
+        $keys = [];
+        foreach ($items as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            $normalized = $this->parseBaselineItem($item);
+            if ($normalized === null) {
+                continue;
+            }
+
+            $keys[
+                sha1(
+                    $normalized['file']
+                    . "\0"
+                    . $normalized['line']
+                    . "\0"
+                    . $normalized['message']
+                    . "\0"
+                    . $normalized['rule']
+                )
+            ] = true;
+        }
+
+        return $keys;
+    }
+
+    /**
+     * @param array<mixed, mixed> $item
+     * @return array{file: string, line: int, message: string, rule: string}|null
+     */
+    // @readalizer-suppress NoArrayReturnRule
+    private function parseBaselineItem(array $item): ?array
+    {
+        if (!isset($item['file'], $item['line'], $item['message'], $item['rule'])) {
+            return null;
+        }
+
+        if (
+            !is_string($item['file'])
+            || !is_int($item['line'])
+            || !is_string($item['message'])
+            || !is_string($item['rule'])
+        ) {
+            return null;
+        }
+
+        return [
+            'file' => $item['file'],
+            'line' => $item['line'],
+            'message' => $item['message'],
+            'rule' => $item['rule'],
+        ];
     }
 
 }

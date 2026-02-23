@@ -60,4 +60,17 @@ final class RuleViolationCollection implements IteratorAggregate
     {
         return count($this->violations);
     }
+
+    public function getLimitedTo(int $max): self
+    {
+        if ($max <= 0) {
+            return new self([]);
+        }
+
+        if (count($this->violations) <= $max) {
+            return $this;
+        }
+
+        return new self(array_slice($this->violations, 0, $max));
+    }
 }

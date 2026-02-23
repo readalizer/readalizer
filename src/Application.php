@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Readalizer\Readalizer;
 
+use Readalizer\Readalizer\Attributes\Suppress;
 use Readalizer\Readalizer\Console\Input;
 use Readalizer\Readalizer\Console\Output;
 use Readalizer\Readalizer\Command\AnalyseCommand;
@@ -55,6 +56,7 @@ final class Application
         return $command->run();
     }
 
+    #[Suppress(\Readalizer\Readalizer\Rules\NoLongMethodsRule::class)]
     private function renderHelp(): void
     {
         $this->output->writeln(
@@ -63,6 +65,7 @@ final class Application
 
         Options:
           --format=text|json   Output format (default: text)
+          --output=<file>      Write formatted results to a file
           --jobs=<n>           Run analysis in parallel with N worker processes (default: 1)
           --progress           Force progress bar on
           --no-progress        Disable progress bar

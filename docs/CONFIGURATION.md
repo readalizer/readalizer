@@ -48,16 +48,19 @@ return [
 - `memory_limit` (`string`)
   Default PHP memory limit for analysis.
 - `cache` (`array{enabled?: bool, path?: string}`)
-  Cache configuration. Parsed but not yet enforced by runtime.
+  Cache configuration for the on-disk per-file result cache.
 - `baseline` (`string`)
-  Baseline file path. Parsed but not yet enforced by runtime.
+  Baseline file path used to suppress matching violations.
 - `max_violations` (`int`)
-  Max violations to collect. Parsed but not yet enforced by runtime.
+  Max violations to report (`0` means unlimited).
 
 ## Precedence
 
 - CLI paths override `paths` in config.
 - `--memory-limit` overrides `memory_limit`.
+- `--baseline` overrides `baseline`.
+- `--max-violations` overrides `max_violations`.
+- `--cache` / `--no-cache` override `cache.enabled`.
 - `--config` overrides the default config file location.
 
 ## See Also

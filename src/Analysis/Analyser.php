@@ -11,7 +11,12 @@ namespace Readalizer\Readalizer\Analysis;
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
+use Readalizer\Readalizer\Attributes\Suppress;
 
+#[Suppress(
+    \Readalizer\Readalizer\Rules\MaxClassLengthRule::class,
+    \Readalizer\Readalizer\Rules\NoGodClassRule::class,
+)]
 final class Analyser
 {
     private readonly NodeRuleCollection $nodeRules;
@@ -24,56 +29,108 @@ final class Analyser
         RuleCollection $rules,
         private readonly AnalyserDependency $dependencies,
         private readonly bool $debug, // @readalizer-suppress NoBooleanParameterRule
+        private readonly ?AnalysisResultCache $cache,
     ) {
         $this->nodeRules = $rules->getNodeRules();
         $this->fileRules = $rules->getFileRules();
     }
 
-    public static function createForFactory(RuleCollection $rules, AnalyserDependency $dependencies, bool $debug): self
+    public static function createForFactory(
+        RuleCollection $rules,
+        AnalyserDependency $dependencies,
+        bool $debug,
+        ?AnalysisResultCache $cache = null
+    ): self
     {
-        return new self($rules, $dependencies, $debug);
+        return new self($rules, $dependencies, $debug, $cache);
     }
 
-    public static function createDebugForFactory(RuleCollection $rules, AnalyserDependency $dependencies): self
+    public static function createDebugForFactory(
+        RuleCollection $rules,
+        AnalyserDependency $dependencies,
+        ?AnalysisResultCache $cache = null
+    ): self
     {
-        return self::createForFactory($rules, $dependencies, true);
+        return self::createForFactory($rules, $dependencies, true, $cache);
     }
 
     /**
      * Analyse a list of files or directories and return all violations found.
      *
      * @param PathCollection $paths
+     * @param ?\Closure(RuleViolationCollection): RuleViolationCollection $violationFilter
      */
+    #[Suppress(
+        \Readalizer\Readalizer\Rules\NoLongMethodsRule::class,
+        \Readalizer\Readalizer\Rules\MaxNestingDepthRule::class,
+    )]
     public function analyse(
         PathCollection $paths,
-        ?\Readalizer\Readalizer\Console\ProgressBar $progress = null
+        ?\Readalizer\Readalizer\Console\ProgressBar $progress = null,
+        int $maxViolations = 0,
+        ?\Closure $violationFilter = null
     ): AnalysisResult {
-        $violations = RuleViolationCollection::create([]);
+        try {
+            $violations = RuleViolationCollection::create([]);
 
-        if ($progress === null) {
-            foreach ($this->dependencies->pathResolver->resolve($paths) as $file) {
-                $violations = $violations->merge($this->analyseFile($file)->getRuleViolationCollection());
+            if ($progress === null) {
+                foreach ($this->dependencies->pathResolver->resolve($paths) as $file) {
+                    $fileViolations = $this->analyseFile($file)->getRuleViolationCollection();
+                    if ($violationFilter !== null) {
+                        $fileViolations = $violationFilter($fileViolations);
+                    }
+                    /** @var RuleViolationCollection $fileViolations */
+                    $violations = $this->mergeWithLimit(
+                        $violations,
+                        $fileViolations,
+                        $maxViolations
+                    );
+                    if ($this->hasReachedMaxViolations($violations, $maxViolations)) {
+                        break;
+                    }
+                }
+
+                return AnalysisResult::create($violations);
             }
 
+            $files = iterator_to_array($this->dependencies->pathResolver->resolve($paths), false);
+            $progress->setTotal(count($files));
+            foreach ($files as $file) {
+                $fileViolations = $this->analyseFile($file)->getRuleViolationCollection();
+                if ($violationFilter !== null) {
+                    $fileViolations = $violationFilter($fileViolations);
+                }
+                /** @var RuleViolationCollection $fileViolations */
+                $violations = $this->mergeWithLimit(
+                    $violations,
+                    $fileViolations,
+                    $maxViolations
+                );
+                $progress->update();
+                if ($this->hasReachedMaxViolations($violations, $maxViolations)) {
+                    break;
+                }
+            }
+            $progress->reportCompletion();
+
             return AnalysisResult::create($violations);
+        } finally {
+            $this->saveCache();
         }
-
-        $files = iterator_to_array($this->dependencies->pathResolver->resolve($paths), false);
-        $progress->setTotal(count($files));
-        foreach ($files as $file) {
-            $violations = $violations->merge($this->analyseFile($file)->getRuleViolationCollection());
-            $progress->update();
-        }
-        $progress->reportCompletion();
-
-        return AnalysisResult::create($violations);
     }
 
     /**
      */
+    #[Suppress(\Readalizer\Readalizer\Rules\NoLongMethodsRule::class)]
     public function analyseFile(string $filePath): AnalysisResult
     {
         $this->reportDebugMessage(sprintf('file:start %s', $filePath));
+        $cachedResult = $this->cache?->get($filePath);
+        if ($cachedResult !== null) {
+            $this->reportDebugMessage(sprintf('file:cache-hit %s violations=%d', $filePath, $cachedResult->count()));
+            return AnalysisResult::create($cachedResult);
+        }
+
         $ast = null;
 
         try {
@@ -96,8 +153,36 @@ final class Analyser
         }
 
         $this->reportDebugMessage(sprintf('file:done %s violations=%d', $filePath, $violations->count()));
+        $this->cache?->saveFileResult($filePath, $violations);
 
         return AnalysisResult::create($violations);
+    }
+
+    public function saveCache(): void
+    {
+        $this->cache?->saveChanges();
+    }
+
+    private function mergeWithLimit(
+        RuleViolationCollection $current,
+        RuleViolationCollection $incoming,
+        int $maxViolations
+    ): RuleViolationCollection {
+        if ($maxViolations <= 0) {
+            return $current->merge($incoming);
+        }
+
+        $remaining = $maxViolations - $current->count();
+        if ($remaining <= 0) {
+            return $current;
+        }
+
+        return $current->merge($incoming->getLimitedTo($remaining));
+    }
+
+    private function hasReachedMaxViolations(RuleViolationCollection $violations, int $maxViolations): bool
+    {
+        return $maxViolations > 0 && $violations->count() >= $maxViolations;
     }
 
     /** @param Node[] $ast */

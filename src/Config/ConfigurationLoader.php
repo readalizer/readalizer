@@ -12,13 +12,24 @@ declare(strict_types=1);
 
 namespace Readalizer\Readalizer\Config;
 
+use Readalizer\Readalizer\Attributes\Suppress;
 use Readalizer\Readalizer\Console\Input;
 use Readalizer\Readalizer\Contracts\FileRuleContract;
 use Readalizer\Readalizer\Contracts\RuleContract;
 use Readalizer\Readalizer\Contracts\RulesetContract;
 
+#[Suppress(
+    \Readalizer\Readalizer\Rules\MaxClassLengthRule::class,
+    \Readalizer\Readalizer\Rules\NoGodClassRule::class,
+)]
 final class ConfigurationLoader
 {
+    private const OPTION_BASELINE = '--baseline';
+    private const OPTION_MAX_VIOLATIONS = '--max-violations';
+    private const OPTION_CACHE = '--cache';
+    private const OPTION_NO_CACHE = '--no-cache';
+    private const EMPTY_STRING = '';
+
     private function __construct(private readonly Input $input)
     {
     }
@@ -72,18 +83,22 @@ final class ConfigurationLoader
     /** @param array<string, mixed> $config */
     private function buildCacheConfig(array $config): ?CacheConfig
     {
-        if (!isset($config['cache'])) {
-            return null;
+        $cacheConfig = null;
+        if (isset($config['cache']) && is_array($config['cache'])) {
+            /** @var array{enabled?: bool, path?: string} $cache */
+            $cache = $config['cache'];
+            $cacheConfig = CacheConfig::createFromArray($cache);
         }
 
-        if (!is_array($config['cache'])) {
-            return null;
+        $override = $this->resolveCacheOverride();
+        if ($override === null) {
+            return $cacheConfig;
         }
 
-        /** @var array{enabled?: bool, path?: string} $cache */
-        $cache = $config['cache'];
-
-        return CacheConfig::createFromArray($cache);
+        return CacheConfig::createFromArray([
+            'enabled' => $override,
+            'path' => $cacheConfig?->getPath() ?? '.readalizer-cache.json',
+        ]);
     }
 
     /**
@@ -144,8 +159,8 @@ final class ConfigurationLoader
             ? array_values(array_filter($config['paths'], 'is_string'))
             : [];
         $memoryLimit = is_string($config['memory_limit'] ?? null) ? $config['memory_limit'] : null;
-        $baseline = is_string($config['baseline'] ?? null) ? $config['baseline'] : null;
-        $maxViolations = is_int($config['max_violations'] ?? null) ? $config['max_violations'] : null;
+        $baseline = $this->resolveBaseline($config);
+        $maxViolations = $this->resolveMaxViolations($config);
 
         $ruleset = $this->buildRuleset($config);
 
@@ -176,5 +191,42 @@ final class ConfigurationLoader
             $config['ruleset'],
             static fn(mixed $ruleset): bool => $ruleset instanceof RulesetContract
         ));
+    }
+
+    /** @param array<string, mixed> $config */
+    private function resolveBaseline(array $config): ?string
+    {
+        $cliBaseline = $this->input->getOption(self::OPTION_BASELINE);
+        if (is_string($cliBaseline) && $cliBaseline !== self::EMPTY_STRING) {
+            return $cliBaseline;
+        }
+
+        return is_string($config['baseline'] ?? null) ? $config['baseline'] : null;
+    }
+
+    /** @param array<string, mixed> $config */
+    private function resolveMaxViolations(array $config): ?int
+    {
+        $cli = $this->input->getOption(self::OPTION_MAX_VIOLATIONS);
+        if (is_string($cli) && $cli !== self::EMPTY_STRING) {
+            $value = (int) $cli;
+            return $value >= 0 ? $value : null;
+        }
+
+        $configured = $config['max_violations'] ?? null;
+        return is_int($configured) && $configured >= 0 ? $configured : null;
+    }
+
+    private function resolveCacheOverride(): ?bool
+    {
+        if ($this->input->hasOption(self::OPTION_NO_CACHE)) {
+            return false;
+        }
+
+        if ($this->input->hasOption(self::OPTION_CACHE)) {
+            return true;
+        }
+
+        return null;
     }
 }

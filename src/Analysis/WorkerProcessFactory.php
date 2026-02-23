@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Readalizer\Readalizer\Analysis;
 
+use Readalizer\Readalizer\Attributes\Suppress;
 use Readalizer\Readalizer\System\MemoryLimitConverter;
 
 final class WorkerProcessFactory
@@ -19,6 +20,7 @@ final class WorkerProcessFactory
     private const PROGRESS_PREFIX = 'readalizer-worker-progress';
     private const NEWLINE = "\n";
     private const DEV_NULL = '/dev/null';
+    private const EMPTY_STRING = '';
 
     private function __construct(
         private readonly string $readalizerBin,
@@ -37,7 +39,14 @@ final class WorkerProcessFactory
         return new self($readalizerBin, $configPath, $memoryLimit, $memoryLimitConverter);
     }
 
-    public function createProcess(PathCollection $files, int $jobs, string $token, string $tokenFile): WorkerProcess
+    #[Suppress(\Readalizer\Readalizer\Rules\NoLongParameterListRule::class)]
+    public function createProcess(
+        PathCollection $files,
+        int $jobs,
+        string $token,
+        string $tokenFile,
+        ParallelRunConfig $options
+    ): WorkerProcess
     {
         $filesPath = $this->writeFileList($files);
         $outputPath = $this->createTempPath(self::OUTPUT_PREFIX);
@@ -46,7 +55,7 @@ final class WorkerProcessFactory
         $paths = WorkerProcessPathSet::create($filesPath, $outputPath, $progressPath);
         $security = WorkerCommandSecurity::create($token, $tokenFile);
 
-        $command = $this->buildCommand($paths, $security, $memoryPerWorker);
+        $command = $this->buildCommand($paths, $security, $memoryPerWorker, $options);
         $processHandle = $this->createProcessHandle($command);
         $metrics = WorkerProcessRuntime::create(microtime(true), $files->count());
         $state = WorkerProcessState::create(null, 0);
@@ -62,12 +71,14 @@ final class WorkerProcessFactory
     /**
      * @return iterable<int, string>
      */
+    #[Suppress(\Readalizer\Readalizer\Rules\NoLongMethodsRule::class)]
     private function buildCommand(
         WorkerProcessPathSet $paths,
         WorkerCommandSecurity $security,
-        string $memoryPerWorker
+        string $memoryPerWorker,
+        ParallelRunConfig $options
     ): iterable {
-        return [
+        $command = [
             PHP_BINARY,
             $this->readalizerBin,
             '--_worker',
@@ -79,6 +90,23 @@ final class WorkerProcessFactory
             '--config=' . $this->configPath,
             '--memory-limit=' . $memoryPerWorker,
         ];
+
+        if ($options->hasCacheCliEnable()) {
+            $command[] = '--cache';
+        } elseif ($options->hasCacheCliDisable()) {
+            $command[] = '--no-cache';
+        }
+
+        if ($options->getMaxViolations() > 0) {
+            $command[] = '--max-violations=' . $options->getMaxViolations();
+        }
+
+        $baselinePath = $options->getBaselinePath();
+        if (is_string($baselinePath) && $baselinePath !== self::EMPTY_STRING) {
+            $command[] = '--baseline=' . $baselinePath;
+        }
+
+        return $command;
     }
 
     private function writeFileList(PathCollection $files): string

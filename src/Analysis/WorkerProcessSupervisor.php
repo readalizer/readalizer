@@ -9,7 +9,9 @@ declare(strict_types=1);
 namespace Readalizer\Readalizer\Analysis;
 
 use Readalizer\Readalizer\Console\ProgressBar;
+use Readalizer\Readalizer\Attributes\Suppress;
 
+#[Suppress(\Readalizer\Readalizer\Rules\NoGodClassRule::class)]
 final class WorkerProcessSupervisor
 {
     private const SLEEP_MICROSECONDS = 20000;
@@ -30,14 +32,21 @@ final class WorkerProcessSupervisor
 
     public function collectViolations(
         WorkerProcessCollection $processes,
-        ?ProgressBar $progress
+        ?ProgressBar $progress,
+        int $maxViolations = 0
     ): RuleViolationCollection {
         $this->activeProcesses = $processes;
         $this->activeProgress = $progress;
         $this->activeViolations = RuleViolationCollection::create([]);
 
         while (!$processes->isEmpty()) {
-            $this->handleProcessBatch();
+            $this->handleProcessBatch($maxViolations);
+
+            if ($this->hasReachedMaxViolations($maxViolations)) {
+                $this->handleActiveProcessShutdown();
+                break;
+            }
+
             usleep(self::SLEEP_MICROSECONDS);
         }
 
@@ -49,7 +58,7 @@ final class WorkerProcessSupervisor
         return $violations;
     }
 
-    private function handleProcessBatch(): void
+    private function handleProcessBatch(int $maxViolations): void
     {
         if ($this->activeProcesses === null) {
             return;
@@ -57,6 +66,9 @@ final class WorkerProcessSupervisor
 
         foreach ($this->activeProcesses as $index => $process) {
             $this->handleProcessEntry($index, $process);
+            if ($this->hasReachedMaxViolations($maxViolations)) {
+                return;
+            }
         }
     }
 
@@ -110,6 +122,34 @@ final class WorkerProcessSupervisor
         }
         $status = proc_get_status($handle);
         return $status['running'];
+    }
+
+    private function hasReachedMaxViolations(int $maxViolations): bool
+    {
+        if ($maxViolations <= 0) {
+            return false;
+        }
+
+        $violations = $this->activeViolations;
+        if ($violations === null) {
+            return false;
+        }
+
+        return $violations->count() >= $maxViolations;
+    }
+
+    private function handleActiveProcessShutdown(): void
+    {
+        if ($this->activeProcesses === null) {
+            return;
+        }
+
+        foreach ($this->activeProcesses as $index => $process) {
+            $this->services->getProcessTerminator()->handleProcessStop($process);
+            $this->services->getProgressReporter()->handleProgressClose($process);
+            $this->services->getFileCleaner()->removeFiles($process);
+            $this->activeProcesses->removeProcess($index);
+        }
     }
 
 }
