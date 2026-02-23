@@ -22,12 +22,11 @@ php bin/readalizer src
 
 There is no automated test suite. Validate changes manually:
 
-- `php bin/readalizer` in this repo
-- `php bin/readalizer` on a large external codebase
+- `php bin/readalizer` in this repo (local testing)
+- `php vendor/bin/readalizer` on a large external codebase
 
 ## Submitting Changes
 
 - Keep PRs small and focused.
 - Include a short summary, rationale, and sample CLI output for behavior changes.
-- Document any new CLI flags or config keys in `docs/`.
-
+- Document any new CLI flags or config keys in `docs/` (mirrored at `https://readalizer.github.io/website/`).

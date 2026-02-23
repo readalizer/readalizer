@@ -21,3 +21,7 @@
 
 The CLI help lists `--format=json` but the `AnalyseCommand` currently uses `TextFormatter` only. Implement `JsonFormatter` wiring in `AnalyseCommand` if you need JSON output.
 
+## See Also
+
+- [CLI.md](CLI.md)
+- [PARALLEL.md](PARALLEL.md)

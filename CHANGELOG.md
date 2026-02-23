@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2026-02-22
 
 ### Added
-- Developer documentation set under `docs/`.
+- Developer documentation set under `docs/` and mirrored at `https://readalizer.github.io/website/`.
 - Parallel execution helpers and worker infrastructure improvements.
 
 ### Changed

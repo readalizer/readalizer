@@ -14,24 +14,26 @@ composer require readalizer/readalizer
 
 ```bash
 cp readalizer.php.example readalizer.php
-php bin/readalizer
+php vendor/bin/readalizer
 ```
 
 You can also generate the config with:
 
 ```bash
-php bin/readalizer --init
+php vendor/bin/readalizer --init
 ```
 
 ## CLI Examples
 
 ```bash
-php bin/readalizer src/ lib/
-php bin/readalizer --jobs=4 --memory-limit=2G
-php bin/readalizer --config=path/to/readalizer.php
+php vendor/bin/readalizer src/ lib/
+php vendor/bin/readalizer --jobs=4 --memory-limit=2G
+php vendor/bin/readalizer --config=path/to/readalizer.php
 ```
 
 ## Developer Docs
+
+Documentation lives in this repo under `docs/` and is mirrored at `https://readalizer.github.io/website/`.
 
 See `docs/README.md` for full developer documentation, including architecture, rules, suppression, configuration, CLI details, and parallel execution.
 

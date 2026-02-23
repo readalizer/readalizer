@@ -44,9 +44,13 @@ This document explains the major components and data flow in Readalizer.
 - `#[Suppress]` attribute suppresses rules at class, method, or property scope.
 - Inline comment suppression uses `// @readalizer-suppress` with rule names or class names.
 
-See `docs/SUPPRESSION.md` for full details.
+See [SUPPRESSION.md](SUPPRESSION.md) for full details.
 
 ## Configuration Boundaries
 
-`ConfigurationLoader` accepts the config array and creates a typed `Configuration` object. Not all config keys are currently enforced by the runtime. See `docs/CONFIGURATION.md`.
+`ConfigurationLoader` accepts the config array and creates a typed `Configuration` object. Not all config keys are currently enforced by the runtime. See [CONFIGURATION.md](CONFIGURATION.md).
 
+## See Also
+
+- [CLI.md](CLI.md)
+- [PARALLEL.md](PARALLEL.md)

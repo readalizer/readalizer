@@ -41,3 +41,7 @@ Do not call these manually.
 - Workers write a newline for each file they complete.
 - The parent process counts these newlines to update the progress bar.
 
+## See Also
+
+- [CLI.md](CLI.md)
+- [ARCHITECTURE.md](ARCHITECTURE.md)

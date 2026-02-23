@@ -3,8 +3,8 @@
 ## Basic Usage
 
 ```bash
-php bin/readalizer
-php bin/readalizer src/ lib/
+php vendor/bin/readalizer
+php vendor/bin/readalizer src/ lib/
 ```
 
 If no paths are provided, `readalizer.php` is used for `paths`.
@@ -14,7 +14,7 @@ If no paths are provided, `readalizer.php` is used for `paths`.
 Create a local config file from the example template:
 
 ```bash
-php bin/readalizer --init
+php vendor/bin/readalizer --init
 ```
 
 ## Options Implemented
@@ -55,4 +55,14 @@ If you plan to implement them, start in:
 
 `--_worker` and the `--worker-*` flags are for internal use only.
 
-Workers are launched by `ParallelRunner`. They use a temporary file list and emit a JSON payload that is merged by the parent process. See `docs/PARALLEL.md` for details.
+Workers are launched by `ParallelRunner`. They use a temporary file list and emit a JSON payload that is merged by the parent process. See [PARALLEL.md](PARALLEL.md) for details.
+
+## Local Testing
+
+If you are running the CLI inside this repo, use `php bin/readalizer` instead of `php vendor/bin/readalizer`.
+
+## See Also
+
+- [CONFIGURATION.md](CONFIGURATION.md)
+- [PARALLEL.md](PARALLEL.md)
+- [TROUBLESHOOTING.md](TROUBLESHOOTING.md)

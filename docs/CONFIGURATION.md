@@ -5,7 +5,7 @@ Readalizer uses a PHP config file that returns an array. The default config file
 You can generate it from the template with:
 
 ```bash
-php bin/readalizer --init
+php vendor/bin/readalizer --init
 ```
 
 ## Example
@@ -59,3 +59,8 @@ return [
 - CLI paths override `paths` in config.
 - `--memory-limit` overrides `memory_limit`.
 - `--config` overrides the default config file location.
+
+## See Also
+
+- [CLI.md](CLI.md)
+- [RULES.md](RULES.md)

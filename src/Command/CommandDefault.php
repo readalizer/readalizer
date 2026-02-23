@@ -12,7 +12,7 @@ final class CommandDefault
 {
     public const MEMORY_LIMIT = '2G';
     public const WORKER_TIMEOUT = 120;
-    public const READALIZER_BIN = 'bin/readalizer';
+    public const READALIZER_BIN = 'vendor/bin/readalizer';
     public const CONFIG_PATH = 'readalizer.php';
 
     private function __construct()

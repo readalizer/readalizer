@@ -97,3 +97,8 @@ The default rulesets are provided under `src/Rulesets/` and cover file structure
 - Keep `processNode` minimal. It runs for every matching AST node.
 - Avoid expensive filesystem calls inside rules.
 - Prefer early exits and tight loops.
+
+## See Also
+
+- [CONFIGURATION.md](CONFIGURATION.md)
+- [SUPPRESSION.md](SUPPRESSION.md)
